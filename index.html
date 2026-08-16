@@ -1,0 +1,1659 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El método DORLA · Más valor para el alumno, menos trabajo para la universidad</title>
+<meta name="description" content="Más valor para el alumno, menos trabajo para la universidad. Un método completo para las orlas universitarias: reserva, sesión, elección con calma, composición en vivo y archivo consultable de todas las promociones.">
+<style>
+:root{
+  --navy:#0f1729;
+  --navy-2:#16233f;
+  --navy-3:#1f2f52;
+  --cream:#f6f1e7;
+  --paper:#fffdf8;
+  --gold:#c9a24a;
+  --gold-2:#e6d3a3;
+  --ink:#1d2436;
+  --muted:#6b7385;
+  --muted-d:#8d94a6;
+  --green:#4f7a5b;
+  --amber:#d99b3c;
+  --red:#b4483d;
+  --grey:#7b8296;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--navy);
+  color:var(--cream);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:400}
+a{color:inherit}
+
+/* Grano de papel sobre todo el documento: lo que quita el aire de plantilla. */
+body::after{
+  content:"";
+  position:fixed; inset:0; z-index:9999; pointer-events:none;
+  opacity:.035; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.eyebrow{
+  font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;
+}
+
+/* ---------------------------------------------------------------- Navegación */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 34px;
+  transition:background .5s var(--ease),padding .5s var(--ease),border-color .5s;
+  border-bottom:1px solid transparent;
+}
+nav.pegada{
+  background:rgba(15,23,41,.86);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding:14px 34px;border-bottom-color:rgba(201,162,74,.18);
+}
+nav .marca{
+  font-family:var(--serif);font-size:19px;letter-spacing:.06em;
+  display:flex;align-items:center;gap:11px;
+}
+/* «El método» acompaña; la palabra que tiene que quedarse es DORLA. */
+nav .marca b{font-weight:600;letter-spacing:.12em}
+nav .marca i{
+  width:9px;height:13px;border-radius:50%;
+  border:1px solid var(--gold);display:inline-block;
+}
+nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0}
+nav a{
+  text-decoration:none;font-size:10.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:#b9c0d0;transition:color .3s;position:relative;
+}
+nav a::after{
+  content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;
+  background:var(--gold);transition:width .4s var(--ease);
+}
+nav a:hover{color:var(--cream)} nav a:hover::after{width:100%}
+@media(max-width:900px){nav ul{display:none}}
+
+/* ------------------------------------------------------------------ Portada */
+header.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;
+}
+#lienzo{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Velo sobre el lienzo: da contraste al texto sin apagar los óvalos.
+   El degradado de la izquierda es el que sostiene la lectura del titular. */
+header.hero::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(100deg,rgba(15,23,41,.92) 0%,rgba(15,23,41,.72) 32%,transparent 68%),
+    radial-gradient(120% 80% at 50% 6%,rgba(201,162,74,.1),transparent 60%),
+    radial-gradient(90% 55% at 50% 100%,rgba(15,23,41,.92),transparent 58%);
+}
+@media(max-width:860px){
+  header.hero::before{
+    background:
+      linear-gradient(180deg,rgba(15,23,41,.55) 0%,rgba(15,23,41,.86) 45%,rgba(15,23,41,.94) 100%);
+  }
+}
+.hero-inner{position:relative;z-index:2;width:100%}
+.hero .eyebrow{margin-bottom:26px;opacity:0;animation:sube 1s .2s var(--ease) forwards}
+h1.titular{
+  font-size:clamp(36px,6.2vw,84px);line-height:1.06;margin:0;
+  letter-spacing:-.015em;
+}
+h1.titular .linea{display:block;overflow:hidden}
+h1.titular .ch{
+  display:inline-block;transform:translateY(105%);
+  animation:letra .9s var(--ease) forwards;
+}
+h1.titular em{font-style:italic;color:var(--gold)}
+@keyframes letra{to{transform:translateY(0)}}
+@keyframes sube{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.hero .bajada{
+  max-width:53ch;margin:34px 0 0;font-size:17px;color:#c4cad8;
+  opacity:0;animation:sube 1s 1.5s var(--ease) forwards;
+}
+/* Dos párrafos: el del alumno y el de la universidad, uno detrás de otro. */
+.hero .bajada-2{margin-top:16px;animation-delay:1.7s}
+.hero .bajada strong{color:#fff;font-weight:600}
+.hero .acciones{
+  display:flex;flex-wrap:wrap;gap:16px;margin-top:44px;
+  opacity:0;animation:sube 1s 1.75s var(--ease) forwards;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:11px;
+  padding:16px 30px;border-radius:2px;text-decoration:none;
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+  transition:all .45s var(--ease);
+}
+.btn.oro{background:var(--gold);color:#15203a}
+.btn.oro:hover{background:var(--gold-2);transform:translateY(-2px)}
+.btn.linea{border:1px solid rgba(246,241,231,.28);color:var(--cream)}
+.btn.linea:hover{border-color:var(--gold);color:var(--gold)}
+
+
+
+/* --------------------------------------------------------------- Secciones */
+section{position:relative;padding:130px 0}
+section.claro{background:var(--cream);color:var(--ink)}
+section.papel{background:var(--paper);color:var(--ink)}
+.cabecera{max-width:66ch;margin-bottom:64px}
+.cabecera h2{
+  font-size:clamp(31px,4.3vw,54px);line-height:1.1;margin:18px 0 20px;
+  letter-spacing:-.01em;
+}
+.cabecera p{font-size:18px;line-height:1.6;color:#3f4658;margin:0}
+.cabecera p + p{margin-top:16px}
+section:not(.claro):not(.papel) .cabecera p{color:#ccd3e2}
+
+/* Aparición al hacer scroll */
+.rev{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rev.dentro{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rev{opacity:1;transform:none;transition:none}
+  h1.titular .ch{transform:none;animation:none}
+  .hero .eyebrow,.hero .bajada,.hero .acciones{opacity:1;animation:none}
+}
+
+/* ------------------------------------------------- La orla de las respuestas */
+.orla-datos{background:var(--navy-2)}
+/* Mural de testimonios: cada voz va dentro de un marco de orla, en vez de una
+   retícula de óvalos vacíos, que parecía un tablero de juego. */
+/* Mural de testimonios. Todas las fichas miden lo mismo pase lo que pase con
+   el texto: la atribución se ancla abajo y la caja estira. Antes el marco era
+   ovalado y se deformaba según el largo de cada cita, que es lo que hacía que
+   la rejilla se viera descuadrada. */
+.mural{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;align-items:stretch;
+}
+@media(max-width:980px){.mural{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:660px){.mural{grid-template-columns:1fr}}
+
+.testimonio{
+  position:relative;display:flex;flex-direction:column;height:100%;
+  margin:0;padding:30px 28px 26px;
+  border:1px solid rgba(246,241,231,.13);
+  border-top:2px solid rgba(201,162,74,.55);
+  background:rgba(255,255,255,.028);
+  opacity:0;transform:translateY(20px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),
+             border-color .45s,background .45s;
+}
+.testimonio.puesto{opacity:1;transform:none}
+.testimonio:hover{
+  border-top-color:var(--gold);
+  background:rgba(230,211,163,.07);
+}
+.testimonio p{
+  font-family:var(--serif);font-size:19px;line-height:1.55;margin:0;
+  color:var(--cream);
+}
+.testimonio footer{
+  margin-top:22px;padding-top:16px;
+  border-top:1px solid rgba(246,241,231,.1);
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);
+}
+/* La atribución siempre al pie, aunque la cita sea corta. */
+.testimonio footer{margin-top:auto}
+
+.nota-metodo{
+  margin-top:26px;font-size:12.5px;color:var(--muted-d);max-width:76ch;
+  border-top:1px solid rgba(246,241,231,.1);padding-top:18px;
+}
+
+/* ----------------------------------------------------------- Método DORLA */
+.pilares{background:var(--cream);color:var(--ink)}
+/* Va dentro de .cabecera, que fija 18px a todos sus párrafos: hay que ganarle
+   en especificidad o la palabra sale del tamaño del texto corriente. */
+.cabecera .siglas,.siglas{
+  display:flex;align-items:baseline;gap:4px;margin:0;
+  font-family:var(--serif);font-size:clamp(46px,9vw,120px);line-height:1;
+  letter-spacing:.02em;
+}
+.siglas span{
+  color:var(--navy-2);transition:color .45s var(--ease),transform .45s var(--ease);
+  cursor:default;
+}
+.siglas span.viva{color:var(--gold);transform:translateY(-6px)}
+/* La D se desdobla en «Digital» sin salirse de la palabra: la inicial mantiene
+   el tamaño de ORLA y el resto va pequeño, así se lee D(igital)ORLA de un golpe. */
+.siglas .dig{color:var(--gold);margin-right:.06em}
+.siglas .dig i{
+  font-style:normal;font-size:.34em;letter-spacing:.01em;
+  vertical-align:baseline;
+}
+
+.lista-pilares{border-top:1px solid #ddd3c2}
+.pilar{
+  border-bottom:1px solid #ddd3c2;padding:34px 0;
+  display:grid;grid-template-columns:88px 1.15fr 1fr;gap:36px;align-items:start;
+  transition:background .5s var(--ease);
+}
+/* Son filas anchas: un desplazamiento de 30px aquí se ve como un salto.
+   Entran casi en el sitio, solo con el desvanecido. */
+.pilar.rev{transform:translateY(12px);transition-duration:.75s}
+.pilar.rev.dentro{transform:none}
+.pilar:hover{background:rgba(201,162,74,.06)}
+.pilar .num{
+  font-family:var(--serif);font-size:52px;line-height:.85;color:var(--gold);
+  transition:transform .45s var(--ease);
+}
+.pilar:hover .num{transform:translateX(5px)}
+.pilar h3{font-size:26px;margin:0;line-height:1.2;color:var(--navy-2)}
+.pilar h3 small{
+  display:block;font-family:var(--sans);font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:#7d7159;margin-bottom:7px;font-weight:600;
+}
+.pilar .det{margin:0;font-size:17.5px;line-height:1.62;color:#3f4658}
+.pilar .contra{
+  display:block;margin-top:14px;font-size:14px;color:#7a6a44;
+  border-left:2px solid var(--gold);padding-left:14px;font-style:italic;
+}
+@media(max-width:860px){
+  .pilar{grid-template-columns:56px 1fr;gap:18px}
+  .pilar .det{grid-column:2}
+}
+
+/* ------------------------------------------------ Pruebas: el mismo alumno */
+.pruebas{background:var(--paper);color:var(--ink)}
+.pruebas .par{
+  display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:56px;
+  align-items:center;
+}
+@media(max-width:900px){.pruebas .par{grid-template-columns:1fr;gap:32px}}
+
+/* Comparador: la imagen de encima se recorta con el tirador. */
+.comparador{
+  position:relative;overflow:hidden;user-select:none;touch-action:pan-y;
+  border:1px solid #e2d9c8;cursor:ew-resize;--corte:50%;
+}
+.comparador img{display:block;width:100%;height:auto;pointer-events:none}
+.comparador .encima{
+  position:absolute;inset:0;
+  clip-path:inset(0 calc(100% - var(--corte)) 0 0);
+}
+.comparador .barra{
+  position:absolute;top:0;bottom:0;left:var(--corte);width:1px;
+  background:var(--gold);pointer-events:none;
+}
+.comparador .barra::after{
+  content:"";position:absolute;top:50%;left:50%;
+  width:36px;height:36px;transform:translate(-50%,-50%);
+  border:1px solid var(--gold);border-radius:50%;
+  background:rgba(255,253,248,.92);
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+}
+.comparador .rot{
+  position:absolute;bottom:12px;z-index:2;
+  font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  padding:5px 11px;background:rgba(15,23,41,.7);color:var(--cream);
+}
+.comparador .rot.izq{left:12px}
+.comparador .rot.der{right:12px}
+
+.tira-retratos{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:24px;
+}
+/* La tira cierra la sección sin pie de foto: sin él sobraba aire hasta la
+   siguiente, así que aquí abajo el respiro es menor que los 130px de norma. */
+.pruebas{padding-bottom:80px}
+@media(max-width:900px){.tira-retratos{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.tira-retratos{grid-template-columns:repeat(2,1fr)}}
+.tira-retratos img{
+  display:block;width:100%;height:auto;border:1px solid #e2d9c8;
+  transition:transform .5s var(--ease);
+}
+.tira-retratos img{cursor:zoom-in}
+.tira-retratos img:hover{transform:translateY(-4px)}
+
+/* Lupa: cualquier foto de la web se abre a tamaño completo. */
+#lupa{
+  position:fixed;inset:0;z-index:200;display:none;
+  background:rgba(9,14,26,.94);
+  align-items:center;justify-content:center;
+}
+#lupa.abierta{display:flex}
+#lupa img{
+  max-width:min(94vw,900px);max-height:88vh;
+  object-fit:contain;box-shadow:0 30px 90px rgba(0,0,0,.55);
+}
+#lupa .cerrar{
+  position:absolute;top:22px;right:26px;
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(246,241,231,.3);background:none;color:var(--cream);
+  font-size:22px;line-height:1;cursor:pointer;transition:all .3s var(--ease);
+}
+#lupa .cerrar:hover{border-color:var(--gold);color:var(--gold)}
+#lupa .flecha{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:52px;height:52px;border-radius:50%;
+  border:1px solid rgba(246,241,231,.22);background:rgba(0,0,0,.35);
+  color:var(--cream);font-size:24px;line-height:1;cursor:pointer;
+  transition:all .3s var(--ease);
+}
+#lupa .flecha:hover{border-color:var(--gold);color:var(--gold)}
+#lupa .flecha.izq{left:24px}
+#lupa .flecha.der{right:24px}
+#lupa .pie{
+  position:absolute;bottom:26px;left:0;right:0;text-align:center;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9aa3b6;
+}
+@media(max-width:620px){
+  #lupa .flecha{width:42px;height:42px}
+  #lupa .flecha.izq{left:8px} #lupa .flecha.der{right:8px}
+}
+.pie-foto{margin-top:16px;font-size:13px;color:var(--muted);font-style:italic}
+
+/* ------------------------------------------ El archivo: buscador que se usa solo */
+.archivo{background:var(--navy-2);overflow:hidden}
+.archivo .rejilla{display:grid;grid-template-columns:1fr 1.15fr;gap:60px;align-items:center}
+@media(max-width:980px){.archivo .rejilla{grid-template-columns:1fr;gap:38px}}
+
+/* Ventana: da a entender que es la aplicación sin decirlo. */
+.ventana{
+  border:1px solid rgba(246,241,231,.14);
+  background:linear-gradient(180deg,rgba(255,253,248,.98),rgba(246,241,231,.96));
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.6);
+  overflow:hidden;color:var(--ink);
+}
+.ventana .barra{
+  display:flex;align-items:center;gap:7px;
+  padding:11px 14px;border-bottom:1px solid #e6ddcc;background:#f2ece1;
+}
+.ventana .barra i{width:9px;height:9px;border-radius:50%;background:#d6cbb6;display:block}
+.ventana .barra span{
+  margin-left:10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:#9c907a;
+}
+.ventana .cuerpo{padding:26px 24px 24px}
+
+.buscador{
+  display:flex;align-items:center;gap:12px;
+  border:1px solid var(--gold);background:#fff;
+  padding:14px 18px;border-radius:2px;
+}
+.buscador svg{width:17px;height:17px;stroke:#9c907a;fill:none;stroke-width:1.8;flex:0 0 auto}
+.buscador .tecleado{
+  font-size:16px;color:var(--ink);min-height:22px;white-space:nowrap;
+  overflow:hidden;
+}
+.buscador .tecleado.vacio{color:#a79c88}
+.cursor{
+  display:inline-block;width:1px;height:17px;background:var(--navy-2);
+  vertical-align:-3px;margin-left:1px;animation:parpadeo 1s steps(2) infinite;
+}
+@keyframes parpadeo{50%{opacity:0}}
+
+.contador{
+  margin:14px 0 18px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:#9c907a;
+}
+.contador b{color:var(--navy-2);font-weight:600}
+
+.fichas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:520px){.fichas{grid-template-columns:repeat(3,1fr)}}
+.ficha{
+  border:1px solid #e6ddcc;background:#fff;overflow:hidden;
+  transition:opacity .45s var(--ease),transform .45s var(--ease),
+             border-color .45s,box-shadow .45s;
+}
+.ficha .foto{
+  display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:#efe8db;
+}
+.ficha .nom{
+  padding:7px 8px 9px;font-size:9.5px;line-height:1.25;color:#5c5344;
+  border-top:1px solid #f0e9dc;
+}
+.ficha.fuera{opacity:.12;transform:scale(.94)}
+.ficha.elegida{
+  border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,74,.22);
+  transform:translateY(-4px);
+}
+
+/* Detalle que aparece cuando queda una sola persona */
+.detalle{
+  display:grid;grid-template-columns:96px 1fr;gap:18px;align-items:center;
+  margin-top:20px;padding:16px;border:1px solid var(--gold);
+  background:rgba(201,162,74,.07);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.detalle.visible{opacity:1;transform:none}
+.detalle img{width:96px;aspect-ratio:3/4;object-fit:cover;display:block;background:#efe8db}
+.detalle .quien{font-family:var(--serif);font-size:22px;color:var(--navy-2);line-height:1.15}
+.detalle .datos{font-size:12.5px;color:#6b6152;margin-top:6px}
+.detalle .datos b{color:var(--navy-2);font-weight:600}
+
+/* ---------------------------------------------------------- Método (fases) */
+.metodo{background:var(--navy)}
+.fases{display:grid;grid-template-columns:260px 1fr;gap:56px}
+@media(max-width:900px){.fases{grid-template-columns:1fr;gap:30px}}
+.indice{position:sticky;top:120px;align-self:start}
+.indice button{
+  display:block;width:100%;text-align:left;background:none;border:0;
+  border-left:1px solid rgba(246,241,231,.15);
+  padding:13px 0 13px 20px;color:#8d94a6;cursor:pointer;
+  font-family:var(--sans);font-size:13px;letter-spacing:.04em;
+  transition:all .4s var(--ease);
+}
+.indice button:hover{color:var(--cream)}
+.indice button.activa{
+  border-left-color:var(--gold);color:var(--gold);
+  padding-left:26px;font-weight:600;
+}
+.panel{display:none}
+.panel.activo{display:block;animation:entra .7s var(--ease)}
+@keyframes entra{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.panel .marca-fase{
+  font-family:var(--serif);font-size:64px;color:rgba(201,162,74,.24);line-height:1;
+}
+.panel h3{font-size:33px;margin:10px 0 18px}
+.panel p{font-size:16px;color:#b6bdcd;max-width:60ch;margin:0 0 20px}
+/* Sobre fondo oscuro, engordar la letra casi no se ve: lo que destaca es
+   subir el brillo. La negrita aquí es blanco puro contra el gris del texto. */
+.panel strong,.panel li strong{color:#fff;font-weight:600}
+.panel ul{margin:0;padding:0;list-style:none;max-width:60ch}
+.panel li{
+  padding:13px 0 13px 26px;border-top:1px solid rgba(246,241,231,.1);
+  font-size:14.5px;color:#c4cad8;position:relative;
+}
+.panel li::before{
+  content:"";position:absolute;left:0;top:20px;
+  width:7px;height:9px;border-radius:50%/42%;border:1px solid var(--gold);
+}
+.sello{
+  display:inline-block;margin-top:24px;padding:9px 16px;
+  border:1px solid rgba(201,162,74,.42);color:var(--gold);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+}
+
+/* -------------------------------------------------- Metodología ≠ proveedor */
+.frente{background:var(--paper);color:var(--ink)}
+.balanza{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #e2d9c8}
+@media(max-width:860px){.balanza{grid-template-columns:1fr}}
+/* El peso visual va en la columna del método DORLA: es la que tiene que quedarse. */
+.col-b{padding:38px 34px}
+.col-b:first-child{border-right:1px solid #e2d9c8;opacity:.72}
+.col-b:last-child{
+  background:linear-gradient(180deg,rgba(201,162,74,.1),rgba(201,162,74,.03));
+  box-shadow:inset 0 3px 0 var(--gold);
+}
+/* Sin etiqueta debajo, el nombre de cada modelo es lo único que encabeza la
+   columna: tiene que leerse de lejos y decir por sí solo de quién habla. */
+.col-b h3{font-size:30px;margin:0 0 24px;color:var(--navy-2);letter-spacing:-.015em}
+.col-b:last-child h3{font-size:36px;color:var(--navy)}
+.col-b ul{list-style:none;margin:0;padding:0}
+.col-b li{
+  padding:15px 0;border-top:1px solid #e6ddcc;font-size:14.5px;
+  display:flex;gap:13px;align-items:flex-start;
+}
+.col-b li span.ic{
+  flex:0 0 auto;width:17px;height:17px;border-radius:50%;
+  display:grid;place-items:center;font-size:10px;margin-top:3px;font-weight:700;
+}
+.col-b:first-child li span.ic{background:#e2d2cf;color:var(--red)}
+.col-b:last-child li span.ic{background:rgba(201,162,74,.2);color:#96762c}
+.remate{
+  margin-top:44px;padding:34px;background:var(--navy);color:var(--cream);
+  font-family:var(--serif);font-size:clamp(20px,2.5vw,29px);line-height:1.35;
+}
+.remate b{color:var(--gold);font-weight:400;font-style:italic}
+
+/* --------------------------------------------------- La lámina que se compone */
+.viva{background:var(--navy-2);overflow:hidden}
+.viva .rejilla{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+@media(max-width:900px){.viva .rejilla{grid-template-columns:1fr;gap:40px}}
+.mini-orla{
+  border:1px solid rgba(201,162,74,.32);padding:26px 22px;
+  background:linear-gradient(165deg,rgba(31,47,82,.6),rgba(15,23,41,.55));
+  position:relative;
+}
+.mini-orla::before{
+  content:"";position:absolute;inset:8px;border:1px solid rgba(201,162,74,.14);
+}
+.mini-orla .tit{text-align:center;font-family:var(--serif);font-size:15px;margin-bottom:2px}
+.mini-orla .sub{
+  text-align:center;font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--muted-d);margin-bottom:20px;
+}
+.mini-retic{display:grid;grid-template-columns:repeat(8,1fr);gap:9px 7px}
+.hueco{
+  aspect-ratio:3/4;border-radius:50%/42%;
+  border:1px dashed rgba(246,241,231,.16);
+  transition:all .6s var(--ease);
+  position:relative;overflow:hidden;
+}
+/* El hueco vacío es un óvalo punteado; cuando le toca, entra la cara. */
+.hueco img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transform:scale(1.06);
+  transition:opacity .55s var(--ease),transform .55s var(--ease);
+}
+.hueco.puesto{
+  border-style:solid;border-color:rgba(201,162,74,.6);
+  background:rgba(201,162,74,.15);
+}
+.hueco.puesto img{opacity:.9;transform:none}
+.barra-progreso{
+  height:2px;background:rgba(246,241,231,.12);margin-top:22px;overflow:hidden;
+}
+.barra-progreso div{height:100%;width:0;background:var(--gold);transition:width .5s linear}
+.pie-progreso{
+  display:flex;justify-content:space-between;font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted-d);margin-top:9px;
+}
+
+/* ------------------------------------------------------------------ Cierre */
+.cierre{background:var(--navy);text-align:center;padding:150px 0 120px}
+.cierre h2{font-size:clamp(32px,5vw,64px);line-height:1.08;margin:20px 0 26px}
+.cierre p{max-width:56ch;margin:0 auto 44px;color:#b6bdcd;font-size:16.5px}
+/* La página abre y cierra con la misma frase: es lo que tiene que quedar. */
+.cierre p.firma{
+  margin:56px auto 0;font-family:var(--serif);font-style:italic;
+  font-size:clamp(17px,2.2vw,23px);color:var(--gold);letter-spacing:.01em;
+  text-transform:none;max-width:34ch;line-height:1.4;
+}
+footer.pie{
+  background:var(--navy);border-top:1px solid rgba(246,241,231,.12);
+  padding:40px 0;
+}
+footer.pie .wrap{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6f7688;
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="marca"><i></i> El método <b>DORLA</b></div>
+  <ul>
+    <li><a href="#voz">La voz de 63 orlas</a></li>
+    <li><a href="#pilares">Digital Orla</a></li>
+    <li><a href="#metodo">Paso a paso</a></li>
+    <li><a href="#pruebas">Resultados</a></li>
+    <li><a href="#archivo">El archivo</a></li>
+    <li><a href="#diferencia">La diferencia</a></li>
+    <li><a href="#contacto">Hablemos</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================== PORTADA -->
+<header class="hero">
+  <canvas id="lienzo"></canvas>
+  <div class="hero-inner wrap">
+    <div class="eyebrow">Un método nuevo para las orlas universitarias</div>
+    <h1 class="titular" id="titular">
+      <span class="linea" data-txt="Más valor para el alumno."></span>
+      <span class="linea" data-txt="Menos trabajo para"></span>
+      <span class="linea" data-txt="la" data-em="universidad."></span>
+    </h1>
+    <p class="bajada">
+      El alumno reserva su hora, se fotografía y tiene sus fotos para
+      <strong>elegir con calma desde el móvil</strong>. Con <strong>una edición
+      de su foto y 5 retratos profesionales</strong> para LinkedIn y CV de
+      regalo.
+    </p>
+    <p class="bajada bajada-2">
+      Mientras tanto, la facultad ve el progreso en su panel y aprueba los
+      avances <strong>desde una sola pantalla</strong>. Y ordenamos todo vuestro
+      archivo de orlas para poder buscar a cada persona por su nombre y su foto,
+      <strong>aunque hayan pasado veinte años</strong>.
+    </p>
+    <div class="acciones">
+      <a class="btn oro" href="https://metododorla.lovable.app/" target="_blank" rel="noopener">Probar la demo</a>
+      <a class="btn linea" href="#metodo">Cómo funciona</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================= LA ORLA DE RESPUESTAS -->
+<section class="orla-datos" id="voz">
+  <div class="wrap">
+    <div class="cabecera rev">
+      <div class="eyebrow">63 graduados encuestados</div>
+      <h2>Así lo recuerdan ellos</h2>
+      <p>
+        Antes de construir nada, preguntamos a quienes ya habían pasado por
+        ello. Estas son sus palabras, sin retocar.
+      </p>
+    </div>
+
+    <div class="mural" id="mural"></div>
+
+    <p class="nota-metodo rev">
+      Cuestionario abierto y anónimo, julio de 2026. Más de 65 personas
+      respondieron. Las citas son textuales.
+    </p>
+  </div>
+</section>
+
+<!-- =============================================================== PILARES -->
+<section class="pilares claro" id="pilares">
+  <div class="wrap">
+    <div class="cabecera rev">
+      <p class="siglas" id="siglas" aria-label="DORLA, de Digital Orla">
+        <span class="dig">D<i>igital</i></span><span>O</span><span>R</span><span>L</span><span>A</span>
+      </p>
+      <h2 style="margin-top:20px">El ritual de siempre, optimizado al detalle</h2>
+      <p>
+        Ponerse la beca, salir en la lámina y colgarla en casa lleva un siglo
+        significando lo mismo, y así se queda. Lo que se pone al día es todo lo
+        que hay alrededor y que hoy sigue funcionando a base de papel, prisas y
+        llamadas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="metodo" id="metodo">
+  <div class="wrap">
+    <div class="cabecera rev">
+      <div class="eyebrow">DORLA, paso a paso</div>
+      <h2>Seis momentos, ninguno improvisado</h2>
+      <p>
+        La diferencia no está en la cámara. Está en que cada tramo del proceso
+        tiene un responsable, un plazo y una pantalla donde se ve en qué punto va.
+      </p>
+    </div>
+
+    <div class="fases rev">
+      <div class="indice" id="indice">
+        <button class="activa" data-p="0">01 · La cita</button>
+        <button data-p="1">02 · La sesión</button>
+        <button data-p="2">03 · La elección</button>
+        <button data-p="3">04 · El laboratorio</button>
+        <button data-p="4">05 · La lámina</button>
+        <button data-p="5">06 · El después</button>
+      </div>
+
+      <div id="paneles">
+        <div class="panel activo">
+          <div class="marca-fase serif">01</div>
+          <h3 class="serif">La cita</h3>
+          <p>
+            El alumno abre el calendario y <strong>elige el día y la hora
+            exactos</strong> que le vienen bien, entre clases o después del
+            último examen. No se le asigna un turno: lo escoge él.
+          </p>
+          <p>
+            Y no tiene que ir a ningún estudio. Montamos la sesión
+            <strong>dentro de la propia universidad</strong>: habilitamos un aula
+            o una sala y la convertimos en un plató con equipo profesional
+            —iluminación, fondo y cámara— para que baje, se haga la foto y
+            vuelva a lo suyo.
+          </p>
+          <ul>
+            <li><strong>Calendario abierto:</strong> elige día y hora concretos, y los cambia si le surge algo</li>
+            <li><strong>Pago al reservar</strong> la cita</li>
+            <li><strong>Días de sobra para todos:</strong> si se llenan las horas, se abren más</li>
+            <li>Agenda por titulación, con avisos automáticos a quien no ha reservado</li>
+            <li>Altas de última hora resueltas por el fotógrafo en el propio set</li>
+          </ul>
+          <div class="sello">Adiós a «solo nos dejaban pagar en efectivo»</div>
+        </div>
+
+        <div class="panel">
+          <div class="marca-fase serif">02</div>
+          <h3 class="serif">La sesión</h3>
+          <p>
+            Como el trabajo está hecho de antes, el día de la sesión no queda
+            nada que resolver: ya está pagado, ya tiene su hora y nadie se para
+            a mirar fotos diminutas en la pantalla de la cámara. Ese tiempo que
+            se ahorra es el que permite hacerle <strong>cinco fotos en vez de
+            tres</strong>, sin colas eternas detrás. Para el alumno es un rato
+            agradable, no un trámite con prisa.
+          </p>
+          <ul>
+            <li><strong>Conexión instantánea:</strong> la foto le llega al teléfono a los pocos minutos</li>
+            <li><strong>Cinco tomas por alumno</strong>, en vez de las tres de siempre</li>
+            <li>Control de quién ha venido y quién falta, en directo</li>
+            <li>¿No era tu día? <strong>Puedes volver otro día a precio reducido</strong>, cogiendo otra hora libre de la campaña</li>
+          </ul>
+          <div class="sello">33 de 63 pusieron «no poder repetir» entre lo peor de su orla</div>
+        </div>
+
+        <div class="panel">
+          <div class="marca-fase serif">03</div>
+          <h3 class="serif">La elección</h3>
+          <p>
+            Cada alumno elige sus fotos desde su propio móvil, y no en dos
+            minutos: tiene <strong>varias semanas de margen</strong> para verlas
+            con calma, pedir retoques, repetir la sesión si no le convence y
+            confirmar cómo se escriben su nombre y su procedencia. Todo eso llega
+            a la facultad ya resuelto, en vez de convertirse en su problema.
+          </p>
+          <ul>
+            <li><strong>Galería personal privada:</strong> entra con su cuenta de la universidad, sin contraseñas que se pierden</li>
+            <li>Nombre y procedencia <strong>confirmados por el alumno</strong>, aprobados por la facultad</li>
+            <li><strong>Semanas para decidir</strong>, con avisos antes de que se cierre el plazo</li>
+          </ul>
+          <div class="sello">
+            Se lo preguntamos a 63 personas con orla: 42 pusieron «elegir con
+            prisa» entre lo peor de la suya
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="marca-fase serif">04</div>
+          <h3 class="serif">El laboratorio</h3>
+          <p>
+            Un pendiente que molesta, un grano del día antes, un pelo suelto. El
+            alumno marca sobre su propia foto lo que quiere que quitemos y se
+            corrige en Photoshop.
+          </p>
+          <p>
+            De aquí salen también <strong>cinco retratos profesionales
+            incluidos</strong>, listos para LinkedIn y para el currículum. Al
+            terminar la carrera, esa fotografía es lo primero que ve de él la
+            mayoría de las empresas, y es lo que le distingue del resto de
+            recién graduados de España.
+          </p>
+          <ul>
+            <li>Se quita lo que sobra; <strong>nunca se retocan los rasgos</strong> de nadie</li>
+            <li><strong>Un retoque incluido</strong> en el precio, sin letra pequeña</li>
+            <li><strong>Cinco retratos profesionales</strong> para LinkedIn y el currículum, incluidos</li>
+            <li>Revisión a tamaño real antes de que el alumno lo vea</li>
+            <li>La foto corregida se suma a la galería: <strong>la original no se pierde</strong></li>
+          </ul>
+          <div class="sello">Para que un grano no te estropee la foto de tu vida</div>
+        </div>
+
+        <div class="panel">
+          <div class="marca-fase serif">05</div>
+          <h3 class="serif">La lámina</h3>
+          <p>
+            La orla <strong>se compone sola</strong> mientras avanza la campaña.
+            La universidad la ve crecer en pantalla, pudiendo
+            <strong>comprobar que todo está correcto en cualquier
+            momento</strong>.
+          </p>
+          <ul>
+            <li><strong>Maquetación en vivo:</strong> cada foto aprobada ocupa su sitio al instante</li>
+            <li>Se puede <strong>añadir a los profesores</strong> que haga falta desde la propia web, sin rehacer nada</li>
+            <li>Plantilla <strong>aprobada previamente</strong> por la universidad</li>
+            <li>Con opción de añadir copias según las solicite el alumno</li>
+            <li>Las láminas <strong>se entregan a la universidad</strong>, que las reparte en la graduación como hace siempre</li>
+          </ul>
+          <div class="sello">La universidad mantiene el control</div>
+        </div>
+
+        <div class="panel">
+          <div class="marca-fase serif">06</div>
+          <h3 class="serif">El después</h3>
+          <p>
+            Aquí es donde deja de ser un servicio de fotografía. Esto no es una
+            campaña que se cierra en junio y hasta el año que viene: mientras la
+            universidad siga contando con nosotros, tiene acceso al
+            <strong>archivo consultable de todas sus promociones</strong> —quién
+            estaba, en qué año, en qué titulación, con su foto y su nombre bien
+            escrito—, y <strong>cada curso que pasa vale un poco más</strong>.
+          </p>
+          <ul>
+            <li><strong>Buscador por nombre, año y titulación</strong> para el equipo de Alumni</li>
+            <li>Las promociones antiguas <strong>se incorporan desde los PDF</strong> que ya tenéis</li>
+            <li>Material listo para encuentros de graduación, aniversarios y comunicados</li>
+            <li>El alumno se descarga su foto <strong>en alta resolución</strong> durante la campaña, con avisos antes de que se cierre</li>
+          </ul>
+          <div class="sello">Una relación pensada a largo plazo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ MÉTODO -->
+<!-- =============================================== PRUEBAS CON UNA CARA REAL -->
+<section class="pruebas papel" id="pruebas">
+  <div class="wrap">
+    <div class="cabecera rev">
+      <div class="eyebrow">Una sesión, tres resultados</div>
+      <h2>Esto no es una promesa: es lo que sale</h2>
+      <p>
+        Todo lo que hay debajo salió de una misma sesión de orla, y está hecho
+        con el sistema que se describe en esta página.
+      </p>
+    </div>
+
+    <div class="par rev">
+      <div class="comparador" id="comparador">
+        <img src="img/retoque-antes.jpg" alt="Foto de orla antes del retoque" width="620" height="775">
+        <div class="encima">
+          <img src="img/retoque-despues.jpg" alt="La misma foto, con el pendiente y el mechón retirados" width="620" height="775">
+        </div>
+        <span class="rot izq">Corregida</span>
+        <span class="rot der">Original</span>
+        <div class="barra"></div>
+      </div>
+
+      <div>
+        <h3 class="serif" style="font-size:clamp(24px,3vw,34px);margin:0 0 16px;color:var(--navy-2)">
+          El alumno marca lo que le sobra
+        </h3>
+        <p style="font-size:17px;line-height:1.6;color:#3f4658;margin:0 0 16px">
+          Un pendiente, un grano del día antes, un pelo suelto. Se señala sobre
+          la propia foto y se corrige en el laboratorio. Los rasgos no se tocan:
+          la cara tiene que seguir siendo la suya.
+        </p>
+        <p style="font-size:17px;line-height:1.6;color:#3f4658;margin:0">
+          Arrastra el tirador para ver el antes y el después.
+        </p>
+        <p class="pie-foto">Dos retoques reales sobre la foto original: el pendiente y el mechón.</p>
+      </div>
+    </div>
+
+    <div class="rev" style="margin-top:66px">
+      <h3 class="serif" style="font-size:clamp(24px,3vw,34px);margin:0 0 12px;color:var(--navy-2)">
+        Y de la misma sesión salen los retratos
+      </h3>
+      <p style="font-size:17px;line-height:1.6;color:#3f4658;margin:0 0 14px;max-width:62ch">
+        Ya está la persona arreglada, iluminada y delante de la cámara. Sin
+        volver a citarla, sale con la foto de la orla y con los retratos que va
+        a usar en LinkedIn los próximos años.
+      </p>
+      <p style="font-size:17px;line-height:1.6;color:#3f4658;margin:0;max-width:62ch">
+        Y esto no es un capricho del fotógrafo. Cuando esa persona termine la
+        carrera y compita con todos los recién graduados de España, lo primero
+        que va a ver de ella la mayoría de las empresas es esa fotografía, antes
+        que su currículum. Salir de la graduación con una imagen profesional
+        decente es, para el alumno, una de las cosas más útiles que se lleva.
+      </p>
+      <p style="font-size:17px;line-height:1.6;color:#3f4658;margin:14px 0 0;max-width:62ch">
+        Ellos lo tienen claro: <strong>el 90 % los quiere</strong>, y hoy no los
+        ofrece nadie en España junto con la orla.
+      </p>
+      <div class="tira-retratos">
+        <img src="img/retrato-1.jpg" data-grande="img/retrato-1-g.jpg" alt="Retrato profesional en oficina" width="440" height="586" loading="lazy">
+        <img src="img/retrato-2.jpg" data-grande="img/retrato-2-g.jpg" alt="Retrato profesional en estudio" width="440" height="586" loading="lazy">
+        <img src="img/retrato-3.jpg" data-grande="img/retrato-3-g.jpg" alt="Retrato profesional en blanco y negro" width="440" height="586" loading="lazy">
+        <img src="img/retrato-4.jpg" data-grande="img/retrato-4-g.jpg" alt="Retrato profesional en el vestíbulo de la facultad" width="440" height="586" loading="lazy">
+        <img src="img/retrato-5.jpg" data-grande="img/retrato-5-g.jpg" alt="Retrato profesional en exterior" width="440" height="586" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ EL ARCHIVO, EN MARCHA -->
+<section class="archivo" id="archivo">
+  <div class="wrap rejilla">
+    <div class="rev">
+      <div class="eyebrow">Lo que queda después</div>
+      <h2 style="font-family:var(--serif);font-size:clamp(30px,4vw,50px);line-height:1.1;margin:18px 0 22px">
+        Cualquier promoción, en un vistazo
+      </h2>
+      <p style="font-size:18px;line-height:1.6;color:#ccd3e2;max-width:46ch;margin:0 0 22px">
+        Escribes un apellido y aparece la persona con su foto, su titulación y
+        su año.
+      </p>
+
+      <div style="border-left:2px solid var(--gold);padding-left:22px;max-width:46ch">
+        <div class="eyebrow" style="margin-bottom:10px">Empieza con lo que ya tenéis</div>
+        <p style="font-size:16px;line-height:1.6;color:#ccd3e2;margin:0 0 14px">
+          El archivo no arranca con la primera promoción que fotografiemos.
+          Nos basta con los <strong style="color:#fff;font-weight:600">PDF de las
+          orlas antiguas</strong>: de cada lámina recortamos alumno por alumno y
+          asociamos cada cara con su nombre y su promoción. Lo que era una
+          imagen plana pasa a ser una ficha por persona, aunque la foto la
+          hiciera otro fotógrafo hace veinte años.
+        </p>
+        <p style="font-size:16px;line-height:1.6;color:#ccd3e2;margin:0">
+          Eso es lo que hace falta el día que hay que felicitar a un recién
+          graduado, anunciar el premio de un antiguo alumno o ilustrar su
+          fichaje: se busca su apellido y en dos segundos está su foto de orla,
+          suelta y lista para publicar. Sin rebuscar en un montón de orlas
+          olvidadas.
+        </p>
+      </div>
+    </div>
+
+    <div class="rev">
+      <div class="ventana" id="ventanaArchivo">
+        <div class="barra">
+          <i></i><i></i><i></i>
+          <span>Archivo de la universidad</span>
+        </div>
+        <div class="cuerpo">
+          <div class="buscador">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>
+            </svg>
+            <div class="tecleado vacio" id="tecleado">Escribe un nombre o apellido…<span class="cursor"></span></div>
+          </div>
+          <div class="contador"><b id="nRes">119</b> resultados</div>
+          <div class="fichas" id="fichas"></div>
+          <div class="detalle" id="detalle">
+            <img src="" alt="" id="detFoto">
+            <div>
+              <div class="quien" id="detNombre"></div>
+              <div class="datos" id="detDatos"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="pie-foto" style="color:#8d94a6">
+        Datos de demostración: nombres y caras de ejemplo.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================================================== LA DIFERENCIA -->
+<section class="frente papel" id="diferencia">
+  <div class="wrap">
+    <div class="cabecera rev">
+      <div class="eyebrow">Metodología, no proveedor</div>
+      <h2>No es cambiar de fotógrafo. Es cambiar de sistema.</h2>
+      <p>
+        Todos los fotógrafos de orlas hacen buenas fotos; ese no es el problema y
+        nunca lo ha sido. El problema es todo lo que rodea a la foto, y eso no se
+        arregla contratando a otra persona con otra cámara.
+      </p>
+    </div>
+
+    <div class="balanza rev">
+      <div class="col-b">
+        <h3 class="serif">El modelo de siempre</h3>
+        <ul>
+          <li><span class="ic">✕</span> Fichas en papel, rellenadas a mano el día de la foto — con la advertencia «solo usted puede evitar una interpretación errónea de sus datos»</li>
+          <li><span class="ic">✕</span> Reserva por teléfono o correo, con el delegado reenviando por WhatsApp</li>
+          <li><span class="ic">✕</span> Cobro individual y presencial, a menudo en efectivo</li>
+          <li><span class="ic">✕</span> Tres disparos y a elegir en la pantalla de la cámara</li>
+          <li><span class="ic">✕</span> Alta resolución y retoque como extras de pago</li>
+          <li><span class="ic">✕</span> Un día y tres disparos, sin opción a repetir</li>
+          <li><span class="ic">✕</span> La universidad no ve nada hasta que llega la prueba impresa</li>
+          <li><span class="ic">✕</span> Terminada la entrega, se acaba la relación</li>
+        </ul>
+      </div>
+      <div class="col-b">
+        <h3 class="serif">El método DORLA</h3>
+        <ul>
+          <li><span class="ic">✓</span> Listado digital de la universidad, confirmado por el alumno y aprobado por la facultad</li>
+          <li><span class="ic">✓</span> Agenda propia con recordatorios automáticos a quien falta</li>
+          <li><span class="ic">✓</span> Pago al reservar, directamente desde el móvil</li>
+          <li><span class="ic">✓</span> Cinco fotos por alumno, y se eligen en el móvil con calma</li>
+          <li><span class="ic">✓</span> Alta resolución, retoque y retratos profesionales incluidos</li>
+          <li><span class="ic">✓</span> ¿No era tu día? Puedes volver en otro momento a precio reducido</li>
+          <li><span class="ic">✓</span> Panel para la universidad con el progreso al día</li>
+          <li><span class="ic">✓</span> La universidad conserva el archivo consultable de todas sus promociones</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="remate rev">
+      Todo se resume en una frase:
+      <b>más valor para el alumno, menos trabajo para la universidad.</b>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== LA LÁMINA EN DIRECTO -->
+<section class="viva" id="lamina">
+  <div class="wrap rejilla">
+    <div class="rev">
+      <div class="eyebrow">Maquetación en vivo</div>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,3.6vw,44px);line-height:1.12;margin:18px 0 20px">
+        La orla se ve crecer mientras la campaña avanza
+      </h2>
+      <p style="color:#b6bdcd;font-size:16px;max-width:52ch">
+        Cada foto aprobada ocupa su sitio en la lámina en el momento. La facultad
+        entra cuando quiere y ve exactamente cómo va a quedar, con los huecos de
+        quien aún no ha pasado por el estudio marcados en su posición.
+      </p>
+      <p style="color:#b6bdcd;font-size:16px;max-width:52ch">
+        Cuando el último hueco se llena, el archivo de imprenta ya está hecho: sale
+        del mismo motor que dibuja lo que se ve en pantalla, así que no hay
+        sorpresas entre la vista previa y el papel.
+      </p>
+    </div>
+
+    <div class="rev">
+      <div class="mini-orla">
+        <div class="tit">Comunicación Audiovisual · Promoción 2026</div>
+        <div class="sub">Composición en curso</div>
+        <div class="mini-retic" id="miniRetic"></div>
+        <div class="barra-progreso"><div id="barraLlenado"></div></div>
+        <div class="pie-progreso">
+          <span id="etiquetaProgreso">0 de 48 fotografiados</span>
+          <span>Actualizado en directo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ CIERRE -->
+<section class="cierre" id="contacto">
+  <div class="wrap">
+    <div class="eyebrow rev">Hablemos</div>
+    <h2 class="rev">La próxima promoción<br>solo va a pasar una vez.</h2>
+    <p class="rev">
+      Si en vuestra universidad estáis pensando en cómo hacer las orlas del curso
+      que viene, os enseñamos el sistema funcionando: la reserva, la sesión, el
+      panel de la facultad y el archivo. Veinte minutos bastan.
+    </p>
+    <div class="rev">
+      <a class="btn oro" href="https://www.linkedin.com/in/juan-salinas-verano-62475a259/" target="_blank" rel="noopener">Concertar una demostración</a>
+    </div>
+    <p class="firma rev">Más valor para el alumno, menos trabajo para la universidad</p>
+  </div>
+</section>
+
+<div id="lupa" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="cerrar" aria-label="Cerrar">&times;</button>
+  <button class="flecha izq" aria-label="Anterior">&#8249;</button>
+  <img src="" alt="">
+  <button class="flecha der" aria-label="Siguiente">&#8250;</button>
+  <div class="pie"></div>
+</div>
+
+<footer class="pie">
+  <div class="wrap">
+    <span>El método DORLA · Juan Salinas Verano · Pamplona</span>
+    <span>Fotografía, sistema y método propios</span>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  "use strict";
+
+  const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------- Titular letra a letra */
+  document.querySelectorAll("#titular .linea").forEach((linea, iLinea) => {
+    const partes = [
+      { texto: linea.dataset.txt || "", em: false },
+      { texto: linea.dataset.em ? " " + linea.dataset.em : "", em: true },
+    ];
+    let n = 0;
+    partes.forEach(parte => {
+      if (!parte.texto) return;
+      const cont = parte.em ? document.createElement("em") : linea;
+      [...parte.texto].forEach(c => {
+        const s = document.createElement("span");
+        s.className = "ch";
+        s.textContent = c === " " ? " " : c;
+        s.style.animationDelay = (0.35 + iLinea * 0.14 + n * 0.022) + "s";
+        cont.appendChild(s);
+        n++;
+      });
+      if (parte.em) linea.appendChild(cont);
+    });
+  });
+
+  /* --------------------------------------------------- Navegación al hacer scroll */
+  const nav = document.getElementById("nav");
+  addEventListener("scroll", () => nav.classList.toggle("pegada", scrollY > 80), { passive: true });
+
+  /* --------------------------------------------- Aparición de bloques al entrar */
+  const observador = new IntersectionObserver(entradas => {
+    entradas.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("dentro");
+      observador.unobserve(e.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  // El retardo se cuenta DENTRO de cada bloque, no sobre el total de la página.
+  // Contándolo sobre el total, el ciclo de seis se reiniciaba a mitad de una
+  // lista y unos elementos entraban antes que los de encima: parecía un fallo.
+  document.querySelectorAll(".rev").forEach(el => {
+    const hermanos = [...el.parentElement.children].filter(n => n.classList.contains("rev"));
+    el.style.transitionDelay = Math.min(hermanos.indexOf(el), 5) * 0.07 + "s";
+    observador.observe(el);
+  });
+
+  /* ============================================================================
+     PORTADA: la orla grabada que se enciende al pasar el ratón
+
+     El fondo es una retícula de óvalos apenas grabados en la pared, como una
+     orla apagada. Donde pasa el cursor, los óvalos se encienden en oro: es la
+     misma promoción, viva. El brillo de cada óvalo depende de su distancia al
+     cursor, así que el borde del foco sale suave sin recortes duros.
+     ========================================================================== */
+  const lienzo = document.getElementById("lienzo");
+  if (lienzo) {
+    const ctx = lienzo.getContext("2d");
+    let an = 0, al = 0, motas = [], ovalos = [];
+    let raton = { x: -9999, y: -9999 }, foco = { x: -9999, y: -9999 };
+    let sueltoT = Math.random() * 100, hayRaton = false;
+
+    const FOCO = 230;            // alcance del halo, en píxeles
+    const ANCHO_OV = 46, ALTO_OV = 61, HUECO = 26;
+
+    // Las caras que aparecen dentro de los óvalos al encenderse. Van en blanco
+    // y negro desde el archivo; el oro se lo pone el degradado de encima. Si
+    // alguna no llega a cargar, ese óvalo se queda vacío y no pasa nada.
+    const CARAS = [];
+    for (let i = 1; i <= 48; i++) {
+      const im = new Image();
+      im.src = "img/mural/" + String(i).padStart(2, "0") + ".jpg";
+      CARAS.push(im);
+    }
+
+    function medir() {
+      const d = Math.min(devicePixelRatio || 1, 2);
+      an = lienzo.clientWidth; al = lienzo.clientHeight;
+      lienzo.width = an * d; lienzo.height = al * d;
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+
+      // Retícula centrada, con una fila y una columna de más para que no se
+      // vea dónde empieza y dónde acaba.
+      const pasoX = ANCHO_OV + HUECO, pasoY = ALTO_OV + HUECO;
+      const cols = Math.ceil(an / pasoX) + 1, filas = Math.ceil(al / pasoY) + 1;
+      const x0 = (an - (cols - 1) * pasoX) / 2, y0 = (al - (filas - 1) * pasoY) / 2;
+      ovalos = [];
+      for (let f = 0; f < filas; f++) {
+        for (let c = 0; c < cols; c++) {
+          ovalos.push({
+            x: x0 + c * pasoX + (f % 2 ? pasoX * 0.5 : 0),
+            y: y0 + f * pasoY,
+            // Semilla fija por óvalo: unos se encienden antes que otros.
+            s: Math.random() * 0.45 + 0.55,
+            // Cara fija por posición, salteada para que no se repita en línea.
+            cara: CARAS[(c * 5 + f * 7) % CARAS.length],
+          });
+        }
+      }
+
+      const cuantas = Math.min(90, Math.round((an * al) / 18000));
+      motas = Array.from({ length: cuantas }, () => ({
+        x: Math.random() * an, y: Math.random() * al,
+        r: Math.random() * 1.3 + 0.35,
+        vx: (Math.random() - 0.5) * 0.14, vy: (Math.random() - 0.5) * 0.14,
+        a: Math.random() * 0.34 + 0.1,
+      }));
+    }
+
+    function ovalo(o, escala) {
+      ctx.beginPath();
+      ctx.ellipse(o.x, o.y, (ANCHO_OV / 2) * escala, (ALTO_OV / 2) * escala, 0, 0, Math.PI * 2);
+    }
+
+    function pintar() {
+      ctx.clearRect(0, 0, an, al);
+
+      // Sin ratón encima, el foco se pasea solo para que el efecto se vea igual.
+      if (!hayRaton) {
+        sueltoT += 0.0042;
+        foco.x = an * (0.5 + 0.3 * Math.cos(sueltoT));
+        foco.y = al * (0.5 + 0.24 * Math.sin(sueltoT * 1.45));
+      } else {
+        // Persecución suave: el halo llega un instante después que el cursor.
+        foco.x += (raton.x - foco.x) * 0.14;
+        foco.y += (raton.y - foco.y) * 0.14;
+      }
+
+      for (const o of ovalos) {
+        // 1. El grabado: siempre visible, casi imperceptible.
+        ovalo(o, 1);
+        ctx.strokeStyle = "rgba(246,241,231,.055)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // 2. El encendido, proporcional a la cercanía del foco.
+        const d = Math.hypot(o.x - foco.x, o.y - foco.y);
+        if (d > FOCO) continue;
+        const fuerza = Math.pow(1 - d / FOCO, 1.7) * o.s;
+        if (fuerza < 0.015) continue;
+
+        // La cara, recortada al óvalo y subiendo con la cercanía del foco: al
+        // pasar el cursor no se enciende un adorno, aparece la promoción.
+        if (o.cara && o.cara.complete && o.cara.naturalWidth) {
+          const esc = 1 + fuerza * 0.07;
+          const ax = ANCHO_OV * esc, ay = ALTO_OV * esc;
+          ctx.save();
+          ovalo(o, esc);
+          ctx.clip();
+          ctx.globalAlpha = Math.min(1, fuerza * 1.25);
+          ctx.drawImage(o.cara, o.x - ax / 2, o.y - ay / 2, ax, ay);
+          ctx.restore();
+        }
+
+        ovalo(o, 1 + fuerza * 0.07);
+        const relleno = ctx.createLinearGradient(o.x, o.y - ALTO_OV / 2, o.x, o.y + ALTO_OV / 2);
+        relleno.addColorStop(0, "rgba(230,211,163," + (fuerza * 0.2) + ")");
+        relleno.addColorStop(1, "rgba(201,162,74," + (fuerza * 0.05) + ")");
+        ctx.fillStyle = relleno;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(201,162,74," + (fuerza * 0.85) + ")";
+        ctx.lineWidth = 1.1;
+        ctx.stroke();
+
+        // 3. Solo el óvalo bajo el cursor lleva halo: dos o tres, no todos.
+        if (fuerza > 0.78) {
+          ctx.save();
+          ctx.shadowColor = "rgba(201,162,74,.55)";
+          ctx.shadowBlur = 22;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // 4. El polvo dorado, por encima de todo y más discreto que antes.
+      for (const m of motas) {
+        m.x += m.vx; m.y += m.vy;
+        if (m.x < -10) m.x = an + 10; if (m.x > an + 10) m.x = -10;
+        if (m.y < -10) m.y = al + 10; if (m.y > al + 10) m.y = -10;
+        const cerca = Math.hypot(m.x - foco.x, m.y - foco.y) < FOCO * 0.7;
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(201,162,74," + (cerca ? Math.min(0.8, m.a + 0.35) : m.a) + ")";
+        ctx.fill();
+      }
+
+      requestAnimationFrame(pintar);
+    }
+
+    addEventListener("resize", medir);
+    addEventListener("pointermove", e => {
+      const c = lienzo.getBoundingClientRect();
+      if (e.clientY > c.bottom) { hayRaton = false; return; }
+      hayRaton = true;
+      raton.x = e.clientX - c.left;
+      raton.y = e.clientY - c.top;
+    }, { passive: true });
+    addEventListener("pointerleave", () => { hayRaton = false; });
+
+    medir();
+    if (menosMovimiento) {
+      // Quieta, pero no vacía: el grabado se ve y hay un foco fijo en el centro.
+      foco.x = an * 0.5; foco.y = al * 0.42;
+      motas = [];
+      for (const o of ovalos) {
+        ovalo(o, 1);
+        ctx.strokeStyle = "rgba(246,241,231,.055)";
+        ctx.lineWidth = 1; ctx.stroke();
+      }
+    } else {
+      pintar();
+    }
+  }
+
+  /* ============================================================================
+     LA ORLA DE LAS RESPUESTAS
+     63 respuestas reales del cuestionario de julio de 2026. Las diez con texto
+     son citas TEXTUALES; el resto solo aportaron el dato de su experiencia, así
+     que su óvalo no inventa nada — se limita a decir cómo la recuerdan.
+     ========================================================================== */
+  // Citas LITERALES de la base de respuestas del cuestionario. No se corrige
+  // la redacción: si hay que acortar por espacio, el corte se marca con […].
+  const CITAS = [
+    { centro:"Universidad de Navarra · 2026",
+      texto:"Te dejan dos minutos peinarte, sentarte y hacerte las fotos. […] Es un momento que llevas esperando cuatro años o los que dure tu carrera y acaba con un resultado en la mayoría de las ocasiones tirando a horrible." },
+    { centro:"Universidad de Navarra · 2026",
+      texto:"Llegué, había muchísima gente, estaban todos de mal humor porque iban con prisa, luego me hicieron 3 fotos y tuve que quedarme con la menos peor porque por los nervios pues sonreía más forzado y no me ha encantado la foto final" },
+    { centro:"Universidad de Navarra · 2026",
+      texto:"Que no te dejen revisar la foto y poder hacer una después de verte. Es decir, te lanzan la foto casi ni te enteras y no hay vuelta atrás. Es un poco heavy que una después las fotos más importantes de tu vida sea así de rápida." },
+    { centro:"Universidad de Navarra · 2026",
+      texto:"No te dejaban ver las fotos con tranquilidad para elegir cuál preferías. Además, tenías que revisarlas directamente desde la cámara, sin que estuviera conectada a un ordenador, lo que hacía mucho más difícil apreciar cómo habían quedado." },
+    { centro:"Universidad de Navarra · 2017",
+      texto:"Recuerdo que me sacaron pocas fotos (creo que 3) y no me quedé especialmente satisfecha con ninguna." },
+    { centro:"IES La Plana, Castellón · 2024",
+      texto:"Hacer cola fuera de un aula de clase, entrar después de esperar un rato, hacer una foto rápida con una iluminación pésima y que no me dieran ni opción a elegir o repetir" },
+    { centro:"Universidad de Navarra · 2025",
+      texto:"La foto no ha sucedido a la hora prevista por una cola que se formó en la sala. […] Tardaron 6 (!!!) meses en enviárnosla" },
+    { centro:"UPNA · 2026",
+      texto:"Me pusieron el birrete con Photoshop, parece una pegatina en 2D. […] Cuando fui a recoger la orla y las fotos impresas […] no pidieron el número identificativo […] cualquiera podría haberse llevado mi orla, de hecho, yo misma recogí la de una amiga: sólo con el nombre." },
+    { centro:"URJC · 2011",
+      texto:"No pasé por el aro de pagar… y por tanto no me hice la foto. Ahora reconozco que me arrepiento. Ahora lo vería como un recuerdo bonito, pero en su momento me pareció un absoluto robo y me negué" },
+    { centro:"CEU San Pablo · 2025",
+      texto:"Mucho tiempo de espera, muchas fotos repetidas en lugar de pocas copias de fotos distintas." },
+  ];
+
+  // Seis testimonios, los que mejor cuentan lo que falla hoy. Todos a la vista:
+  // esconderlos detrás del ratón hacía que la mayoría no leyera ninguno.
+  const ELEGIDOS = [0, 1, 2, 3, 4, 5];
+  const mural = document.getElementById("mural");
+
+  ELEGIDOS.forEach(i => {
+    const r = CITAS[i];
+    const el = document.createElement("blockquote");
+    el.className = "testimonio";
+    el.innerHTML = "<p>" + r.texto + "</p><footer>" + r.centro + "</footer>";
+    mural.appendChild(el);
+  });
+
+  // Los testimonios entran uno detrás de otro, como se compone una orla.
+  const obsMural = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      [...mural.children].forEach((o, i) => {
+        setTimeout(() => o.classList.add("puesto"), menosMovimiento ? 0 : i * 110);
+      });
+      obsMural.disconnect();
+    });
+  }, { threshold: 0.12 });
+  obsMural.observe(mural);
+
+  /* ------------------------------------------- Siglas DORLA: se encienden solas */
+  const siglas = document.getElementById("siglas");
+  if (siglas) {
+    const letras = [...siglas.children];
+    const obsSiglas = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        obsSiglas.disconnect();
+        letras.forEach((l, i) => {
+          setTimeout(() => {
+            l.classList.add("viva");
+            setTimeout(() => l.classList.remove("viva"), 700);
+          }, menosMovimiento ? 0 : 260 + i * 150);
+        });
+      });
+    }, { threshold: 0.6 });
+    obsSiglas.observe(siglas);
+    letras.forEach(l => {
+      l.addEventListener("pointerenter", () => l.classList.add("viva"));
+      l.addEventListener("pointerleave", () => l.classList.remove("viva"));
+    });
+  }
+
+  /* --------------------------------- Comparador antes / después del retoque */
+  const comp = document.getElementById("comparador");
+  if (comp) {
+    let arrastrando = false;
+
+    const poner = x => {
+      const c = comp.getBoundingClientRect();
+      const pct = Math.min(100, Math.max(0, ((x - c.left) / c.width) * 100));
+      comp.style.setProperty("--corte", pct + "%");
+    };
+
+    comp.addEventListener("pointerdown", e => {
+      arrastrando = true;
+      comp.setPointerCapture(e.pointerId);
+      poner(e.clientX);
+    });
+    comp.addEventListener("pointermove", e => {
+      // Con el ratón basta pasar por encima; con el dedo hay que arrastrar,
+      // o se robaría el gesto de bajar por la página.
+      if (arrastrando || e.pointerType === "mouse") poner(e.clientX);
+    });
+    comp.addEventListener("pointerup", () => { arrastrando = false; });
+    comp.addEventListener("pointercancel", () => { arrastrando = false; });
+
+    // Al entrar en pantalla, el tirador se pasea una vez para que se vea que
+    // la imagen esconde otra debajo. Quien no lo toque, igualmente lo entiende.
+    if (!menosMovimiento) {
+      const obsComp = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          obsComp.disconnect();
+          let t = 0;
+          const reloj = setInterval(() => {
+            t += 0.045;
+            if (t >= Math.PI) { clearInterval(reloj); comp.style.setProperty("--corte", "50%"); return; }
+            comp.style.setProperty("--corte", (50 - 32 * Math.sin(t)) + "%");
+          }, 16);
+        });
+      }, { threshold: 0.45 });
+      obsComp.observe(comp);
+    }
+  }
+
+  /* ------------------------------------------------------------ Método: fases */
+  const indice = document.getElementById("indice");
+  const paneles = [...document.querySelectorAll("#paneles .panel")];
+
+  // Los seis paneles tienen alturas distintas. Como se muestran de uno en uno,
+  // al cambiar de fase el contenedor encogía o crecía de golpe y la página
+  // pegaba un brinco. Se mide el más alto y se reserva ese sitio de una vez.
+  const zona = document.getElementById("paneles");
+  function reservarAltura() {
+    if (!zona) return;
+    zona.style.minHeight = "0px";
+    const activo = paneles.find(p => p.classList.contains("activo"));
+    let alto = 0;
+    paneles.forEach(p => {
+      p.classList.add("activo");
+      p.style.animation = "none";          // medir sin la animación de entrada
+      alto = Math.max(alto, p.offsetHeight);
+      p.style.animation = "";
+      if (p !== activo) p.classList.remove("activo");
+    });
+    zona.style.minHeight = alto + "px";
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(reservarAltura);
+  } else {
+    window.addEventListener("load", reservarAltura);
+  }
+  let remedir;
+  window.addEventListener("resize", () => {
+    clearTimeout(remedir);
+    remedir = setTimeout(reservarAltura, 200);
+  });
+
+  indice.addEventListener("click", ev => {
+    const b = ev.target.closest("button");
+    if (!b) return;
+    indice.querySelectorAll("button").forEach(x => x.classList.remove("activa"));
+    b.classList.add("activa");
+    paneles.forEach((p, i) => p.classList.toggle("activo", i === +b.dataset.p));
+  });
+
+  /* ------------------------------------------- Lámina que se compone sola */
+  const mini = document.getElementById("miniRetic");
+  const barra = document.getElementById("barraLlenado");
+  const etiqueta = document.getElementById("etiquetaProgreso");
+  const TOTAL = 48;
+  for (let i = 0; i < TOTAL; i++) {
+    const h = document.createElement("div");
+    h.className = "hueco";
+    // Una cara distinta por hueco: al completarse, la lámina son 48 personas.
+    const im = document.createElement("img");
+    im.src = "img/mural/" + String(i + 1).padStart(2, "0") + ".jpg";
+    im.alt = "";
+    im.loading = "lazy";
+    h.appendChild(im);
+    mini.appendChild(h);
+  }
+  const obsMini = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      obsMini.disconnect();
+      const huecos = [...mini.children];
+      if (menosMovimiento) {
+        huecos.forEach(h => h.classList.add("puesto"));
+        barra.style.width = "100%";
+        etiqueta.textContent = TOTAL + " de " + TOTAL + " fotografiados";
+        return;
+      }
+      let n = 0;
+      const reloj = setInterval(() => {
+        // Orden desordenado a propósito: los alumnos no pasan por orden de lista.
+        const libres = huecos.filter(h => !h.classList.contains("puesto"));
+        if (!libres.length) { clearInterval(reloj); return; }
+        libres[Math.floor(Math.random() * libres.length)].classList.add("puesto");
+        n++;
+        barra.style.width = (n / TOTAL * 100) + "%";
+        etiqueta.textContent = n + " de " + TOTAL + " fotografiados";
+      }, 110);
+    });
+  }, { threshold: 0.3 });
+  obsMini.observe(mini);
+
+  /* ================================================================
+     El archivo buscándose solo.
+     No es un vídeo: se teclea, se filtra y se destaca en vivo, así que
+     se ve nítido en cualquier pantalla y cambiar el nombre es cambiar
+     una línea. Datos de demostración, caras de ejemplo.
+     ================================================================ */
+  const ventana = document.getElementById("ventanaArchivo");
+  if (ventana) {
+    const GENTE = [
+      { n: "Marina",  a: "Aguirre Solana",  t: "Comunicación Audiovisual", y: 2019, f: "img/archivo/1.jpg" },
+      { n: "Rodrigo", a: "Bermejo Ríos",    t: "Periodismo",               y: 2023, f: "img/archivo/2.jpg" },
+      { n: "Elena",   a: "Cañadas Vidal",   t: "Derecho",                  y: 2021, f: "img/archivo/3.jpg" },
+      { n: "Adrián",  a: "Duarte Merino",   t: "Periodismo",               y: 2023, f: "img/archivo/4.jpg" },
+      { n: "Julia",   a: "Escalante Prado", t: "Comunicación Audiovisual", y: 2019, f: "img/archivo/5.jpg" },
+      { n: "Carlos",  a: "Fuentes Badía",   t: "Derecho",                  y: 2021, f: "img/archivo/6.jpg" },
+      { n: "Nerea",   a: "Gallardo Ostiz",  t: "Periodismo",               y: 2023, f: "img/archivo/7.jpg" },
+      { n: "Víctor",  a: "Hidalgo Sanz",    t: "Comunicación Audiovisual", y: 2019, f: "img/archivo/8.jpg" },
+    ];
+    const BUSCA = "Escalante";      // lo que se teclea
+    const DIANA = 4;                // Julia Escalante Prado
+
+    const cajaFichas = document.getElementById("fichas");
+    const tecleado = document.getElementById("tecleado");
+    const nRes = document.getElementById("nRes");
+    const detalle = document.getElementById("detalle");
+
+    GENTE.forEach((p, i) => {
+      const el = document.createElement("div");
+      el.className = "ficha";
+      el.innerHTML =
+        '<img class="foto" src="' + p.f + '" alt="" loading="lazy">' +
+        '<div class="nom">' + p.n + " " + p.a.split(" ")[0] + "</div>";
+      // Si aún no hay foto para esa ficha, queda el fondo liso: nunca un icono roto.
+      el.querySelector("img").addEventListener("error", e => { e.target.style.visibility = "hidden"; });
+      cajaFichas.appendChild(el);
+    });
+    const fichas = [...cajaFichas.children];
+
+    const espera = ms => new Promise(r => setTimeout(r, ms));
+
+    function reiniciar() {
+      tecleado.innerHTML = "Escribe un nombre o apellido…" + '<span class="cursor"></span>';
+      tecleado.classList.add("vacio");
+      nRes.textContent = "119";
+      fichas.forEach(f => f.classList.remove("fuera", "elegida"));
+      detalle.classList.remove("visible");
+    }
+
+    async function actuar() {
+      reiniciar();
+      await espera(1400);
+
+      // 1. Se teclea, con el ritmo desigual de una persona.
+      tecleado.classList.remove("vacio");
+      for (let i = 1; i <= BUSCA.length; i++) {
+        tecleado.innerHTML = BUSCA.slice(0, i) + '<span class="cursor"></span>';
+        // El número baja mientras se escribe, como una búsqueda de verdad.
+        const restantes = Math.max(1, Math.round(119 / Math.pow(2.6, i)));
+        nRes.textContent = i > 2 ? restantes : "119";
+        if (i > 2) {
+          fichas.forEach((f, k) => f.classList.toggle("fuera", k !== DIANA && i > 3));
+        }
+        await espera(105 + Math.random() * 90);
+      }
+
+      // 2. Queda una.
+      nRes.textContent = "1";
+      fichas.forEach((f, k) => f.classList.toggle("fuera", k !== DIANA));
+      await espera(320);
+      fichas[DIANA].classList.add("elegida");
+
+      // 3. Y se abre su ficha.
+      const p = GENTE[DIANA];
+      document.getElementById("detFoto").src = p.f;
+      document.getElementById("detNombre").textContent = p.n + " " + p.a;
+      document.getElementById("detDatos").innerHTML =
+        p.t + " · Promoción de <b>" + p.y + "</b>";
+      await espera(160);
+      detalle.classList.add("visible");
+
+      await espera(4200);
+    }
+
+    let corriendo = false;
+    const obsArch = new IntersectionObserver(async es => {
+      for (const e of es) {
+        if (!e.isIntersecting || corriendo) continue;
+        corriendo = true;
+        if (menosMovimiento) {
+          // Sin animación: se enseña el resultado directamente.
+          tecleado.innerHTML = BUSCA;
+          tecleado.classList.remove("vacio");
+          nRes.textContent = "1";
+          fichas.forEach((f, k) => f.classList.toggle("fuera", k !== DIANA));
+          fichas[DIANA].classList.add("elegida");
+          const p = GENTE[DIANA];
+          document.getElementById("detFoto").src = p.f;
+          document.getElementById("detNombre").textContent = p.n + " " + p.a;
+          document.getElementById("detDatos").innerHTML = p.t + " · Promoción de <b>" + p.y + "</b>";
+          detalle.classList.add("visible");
+          return;
+        }
+        // Mientras la sección esté a la vista, se repite.
+        while (document.body.contains(ventana)) {
+          await actuar();
+          const r = ventana.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) break;   // fuera de pantalla: descansa
+        }
+        corriendo = false;
+      }
+    }, { threshold: 0.35 });
+    obsArch.observe(ventana);
+  }
+
+  /* ------------------------------------------- Lupa: fotos a tamaño completo */
+  const lupa = document.getElementById("lupa");
+  if (lupa) {
+    const marco = lupa.querySelector("img");
+    const pie = lupa.querySelector(".pie");
+    const ampliables = [...document.querySelectorAll(".tira-retratos img")];
+    let actual = 0;
+
+    const pintar = () => {
+      const el = ampliables[actual];
+      marco.src = el.dataset.grande || el.src;
+      marco.alt = el.alt;
+      pie.textContent = el.alt + " · " + (actual + 1) + " de " + ampliables.length;
+    };
+    const abrir = i => {
+      actual = i;
+      pintar();
+      lupa.classList.add("abierta");
+      document.body.style.overflow = "hidden";
+    };
+    const cerrar = () => {
+      lupa.classList.remove("abierta");
+      document.body.style.overflow = "";
+    };
+    const mover = d => {
+      actual = (actual + d + ampliables.length) % ampliables.length;
+      pintar();
+    };
+
+    ampliables.forEach((img, i) => {
+      img.addEventListener("click", () => abrir(i));
+    });
+    lupa.querySelector(".cerrar").addEventListener("click", cerrar);
+    lupa.querySelector(".izq").addEventListener("click", () => mover(-1));
+    lupa.querySelector(".der").addEventListener("click", () => mover(1));
+    // Tocar el fondo cierra; tocar la foto o los botones, no.
+    lupa.addEventListener("click", e => { if (e.target === lupa) cerrar(); });
+    addEventListener("keydown", e => {
+      if (!lupa.classList.contains("abierta")) return;
+      if (e.key === "Escape") cerrar();
+      if (e.key === "ArrowRight") mover(1);
+      if (e.key === "ArrowLeft") mover(-1);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
