@@ -242,6 +242,55 @@ section:not(.claro):not(.papel) .cabecera p{color:#ccd3e2}
   vertical-align:baseline;
 }
 
+/* La cabecera de esta sección se parte en dos: el texto a la izquierda y el
+   trailer a la derecha. Las siglas bajan de tamaño porque ya no disponen del
+   ancho completo (a 9vw se salían de su columna). */
+.pilares .cabecera{
+  max-width:none;display:grid;gap:clamp(28px,3.4vw,52px);align-items:center;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.35fr);
+  margin-bottom:0;  /* esta sección ya no lleva nada debajo de la cabecera */
+}
+.pilares .cabecera .texto{max-width:44ch}
+.pilares .cabecera .siglas{font-size:clamp(38px,4.6vw,68px)}
+.pilares .cabecera h2{font-size:clamp(27px,2.9vw,38px)}
+.pilares .cabecera .texto p:not(.siglas){font-size:16.5px}
+
+.trailer{margin:0;position:relative;border:1px solid rgba(201,162,74,.4);border-radius:4px;
+         padding:10px;background:rgba(201,162,74,.06)}
+/* Doble filete, el mismo recurso que la lámina impresa */
+.trailer::before{content:"";position:absolute;inset:4px;border:1px solid rgba(201,162,74,.2);
+                 border-radius:3px;pointer-events:none;z-index:2}
+.trailer video{display:block;width:100%;height:auto;border-radius:3px;background:#000;cursor:pointer}
+/* Capa que cubre el vídeo hasta que arranca: pulsar en cualquier punto lo
+   reproduce. Los controles nativos no invitan a pulsar en el centro. */
+.trailer .lienzo{position:relative;line-height:0}
+.trailer .play{
+  position:absolute;inset:0;display:grid;place-items:center;z-index:3;
+  border:0;padding:0;background:transparent;cursor:pointer;border-radius:3px;
+}
+.trailer .play::after{
+  content:"";position:absolute;inset:0;border-radius:3px;
+  background:linear-gradient(180deg,rgba(15,23,41,.10),rgba(15,23,41,.34));
+  transition:background .4s var(--ease);
+}
+.trailer .play:hover::after{background:linear-gradient(180deg,rgba(15,23,41,.04),rgba(15,23,41,.24))}
+.trailer .play span{
+  position:relative;z-index:2;width:88px;height:88px;border-radius:50%;
+  background:rgba(15,23,41,.62);border:1px solid rgba(230,211,163,.65);
+  display:grid;place-items:center;
+  transition:transform .4s var(--ease),background .4s var(--ease);
+}
+.trailer .play:hover span{transform:scale(1.07);background:rgba(15,23,41,.76)}
+.trailer .play svg{width:30px;height:30px;fill:var(--gold-2);margin-left:4px}
+.trailer.sonando .play{display:none}
+@media(max-width:520px){.trailer .play span{width:64px;height:64px}.trailer .play svg{width:22px;height:22px}}
+.trailer figcaption{margin-top:12px;font-family:var(--serif);font-size:13px;
+                    letter-spacing:.16em;text-transform:uppercase;color:#9a8f78;text-align:center}
+@media(max-width:860px){
+  .pilares .cabecera{grid-template-columns:1fr}
+  .pilares .cabecera .texto{max-width:66ch}
+}
+
 .lista-pilares{border-top:1px solid #ddd3c2}
 .pilar{
   border-bottom:1px solid #ddd3c2;padding:34px 0;
@@ -651,16 +700,30 @@ footer.pie .wrap{
 <section class="pilares claro" id="pilares">
   <div class="wrap">
     <div class="cabecera rev">
-      <p class="siglas" id="siglas" aria-label="DORLA, de Digital Orla">
-        <span class="dig">D<i>igital</i></span><span>O</span><span>R</span><span>L</span><span>A</span>
-      </p>
-      <h2 style="margin-top:20px">El ritual de siempre, optimizado al detalle</h2>
-      <p>
-        Ponerse la beca, salir en la lámina y colgarla en casa lleva un siglo
-        significando lo mismo, y así se queda. Lo que se pone al día es todo lo
-        que hay alrededor y que hoy sigue funcionando a base de papel, prisas y
-        llamadas.
-      </p>
+      <div class="texto">
+        <p class="siglas" id="siglas" aria-label="DORLA, de Digital Orla">
+          <span class="dig">D<i>igital</i></span><span>O</span><span>R</span><span>L</span><span>A</span>
+        </p>
+        <h2 style="margin-top:20px">El ritual de siempre, optimizado al detalle</h2>
+        <p>
+          Ponerse la beca, salir en la lámina y colgarla en casa lleva un siglo
+          significando lo mismo, y así se queda. Lo que se pone al día es todo lo
+          que hay alrededor y que hoy sigue funcionando a base de papel, prisas y
+          llamadas.
+        </p>
+      </div>
+
+      <figure class="trailer">
+        <div class="lienzo">
+          <video id="videoTrailer" src="dorla-trailer.mp4" poster="img/trailer-poster.jpg"
+                 controls preload="none" playsinline
+                 aria-label="Vídeo de presentación del método DORLA"></video>
+          <button class="play" type="button" aria-label="Reproducir el vídeo">
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 4 20 12 6 20"/></svg></span>
+          </button>
+        </div>
+        <figcaption>Un minuto · el método, en vídeo</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1655,5 +1718,19 @@ footer.pie .wrap{
 })();
 </script>
 
+<script>
+/* Trailer: la capa de play arranca el vídeo y desaparece; a partir de ahí,
+   pulsar sobre la imagen alterna reproducción y pausa. */
+(function(){
+  const caja = document.querySelector('.trailer');
+  if(!caja) return;
+  const video = caja.querySelector('video');
+  const boton = caja.querySelector('.play');
+  boton.addEventListener('click', () => video.play());
+  video.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
+  video.addEventListener('play',  () => caja.classList.add('sonando'));
+  video.addEventListener('ended', () => caja.classList.remove('sonando'));
+})();
+</script>
 </body>
 </html>
