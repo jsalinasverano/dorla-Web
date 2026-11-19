@@ -95,5 +95,33 @@ footer{border-top:1px solid #e8e1d2;max-width:720px;margin:0 auto;padding:24px 1
 <footer>DORLA · Juan Salinas Verano · <a href="mailto:hola@dorla.es">hola@dorla.es</a></footer>
 <!-- Cloudflare Web Analytics (19-nov-2026): sin cookies; a mano porque la web no pasa por Cloudflare -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c683038ca4e741ab940b98e2be853d4c"}'></script>
+<!-- Contador propio (19-nov-2026): qué secciones se ven y qué enlaces se pulsan. No guarda nada en el dispositivo ni datos personales: solo cuántas veces. -->
+<script>
+(function () {
+  if (!navigator.sendBeacon || location.hostname.indexOf("dorla.es") < 0) return;
+  var movil = window.matchMedia("(max-width: 767px)").matches ? "movil" : "escritorio";
+  function avisa(evento, que) {
+    try { navigator.sendBeacon("https://app.dorla.es/api/evento", JSON.stringify({ evento: evento, que: String(que || "").slice(0, 60), pagina: location.pathname, dispositivo: movil })); } catch (e) {}
+  }
+  avisa("vista", "");
+  var vistas = {};
+  if ("IntersectionObserver" in window) {
+    var mira = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        var id = e.target.id;
+        if (e.isIntersecting && !vistas[id]) { vistas[id] = 1; avisa("seccion", id); mira.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: "-45% 0px -45% 0px" });
+    document.querySelectorAll("section[id], header[id], footer[id]").forEach(function (s) { mira.observe(s); });
+  }
+  document.addEventListener("click", function (ev) {
+    var a = ev.target.closest && ev.target.closest("a, button");
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    var que = href.charAt(0) === "#" ? href : href ? (a.hostname || href).replace(/^www\./, "") : (a.getAttribute("aria-label") || a.textContent || "boton").trim().toLowerCase();
+    avisa("clic", que.replace(/[^a-z0-9áéíóúñü_.:#/ -]/gi, "").slice(0, 60));
+  }, true);
+})();
+</script>
 </body>
 </html>
